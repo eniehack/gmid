@@ -303,3 +303,16 @@ test_174_bugfix() {
 		check_reply "51 not found" || return 1
 	done
 }
+
+test_ocsp() {
+	gmid_cert="$PWD/valid.crt"
+	gmid_key="$PWD/valid.key"
+	setup_simple_test '' "ocsp \"$PWD/ocsp.response\""
+	#setup_simple_test '' ''
+
+	ggflags="-NO"
+
+        if ! fetch /; then
+		return 1
+	fi
+}

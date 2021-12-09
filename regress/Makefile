@@ -11,7 +11,8 @@ all: data gg puny-test fcgi-test
 	./iri_test
 	./runtime ${TESTS}
 
-data: testdata iri_test cert.pem testca.pem valid.crt invalid.cert.pem
+data: testdata iri_test cert.pem testca.pem valid.crt invalid.cert.pem \
+	ocsp.response
 
 gg: gg.o ../iri.o ../utf8.o ${COMPAT}
 	${CC} gg.o ../iri.o ../utf8.o ${COMPAT} -o $@ ${LDFLAGS}
@@ -45,6 +46,7 @@ cert.pem:
 
 testca.pem:
 	openssl genrsa -out testca.key 2048
+	@echo
 	openssl req -x509 -new -sha256		\
 		-key testca.key			\
 		-days 365 -nodes		\
@@ -56,7 +58,7 @@ valid.crt: testca.pem
 	openssl genrsa -out valid.key 2048
 	openssl req -new -key valid.key	\
 		-out valid.csr		\
-		-subj "/CN=valid"
+		-subj "/CN=localhost"
 	@echo
 	openssl x509 -req -in valid.csr		\
 		-CA testca.pem			\
@@ -65,15 +67,30 @@ valid.crt: testca.pem
 		-out valid.crt			\
 		-days 365			\
 		-sha256 -extfile valid.ext
+	@echo
+	./gen-index.sh > index.txt
 
 invalid.cert.pem: cert.pem
 	cp cert.pem invalid.cert.pem
 	cp key.pem invalid.key.pem
 
+ocsp.response: testca.pem testca.key cert.pem key.pem index.txt
+	openssl ocsp \
+		-issuer testca.pem \
+		-cert valid.crt \
+		-respout $@ \
+		-ndays 365 \
+		-index index.txt \
+		-CAfile testca.pem \
+		-CA testca.pem \
+		-rkey valid.key \
+		-rsigner valid.crt
+
 clean:
 	rm -f *.o iri_test cert.pem key.pem
 	rm -f localhost.cert.pem localhost.key.pem
 	rm -f testca.* valid.csr valid.key valid.crt invalid.*pem
+	rm -f ocsp.response index.txt
 	rm -rf testdata fill-file puny-test gg fcgi-test
 	rm -f gmid.pid
 

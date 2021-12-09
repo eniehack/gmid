@@ -11,6 +11,8 @@ run_test() {
 ipv6 off
 port $port
 "
+	gmid_cert="$PWD/cert.pem"
+	gmid_key="$PWD/key.pem"
 	hdr=
 	body=
 	dont_check=no
@@ -51,8 +53,8 @@ gen_config() {
 $config_common
 $1
 server "localhost" {
-	cert "$PWD/cert.pem"
-	key  "$PWD/key.pem"
+	cert "$gmid_cert"
+	key  "$gmid_key"
 	root "$PWD/testdata"
 	$2
 }
