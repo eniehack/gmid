@@ -71,6 +71,18 @@ Some things to keep in mind:
 # journalctl -t gmid
 ```
 
+## OpenRC init script
+
+=> https://git.omarpolo.com/gmid/tree/contrib/openrc/ openrc/gmid.confd and openrc/gmid.initd
+
+These are a sample init script for OpenRC, to be installed as /etc/conf.d/gmid and /etc/init.d/gmid.initd respectively.
+
+The ‘command’ variable may need to be adjusted to the exact location where you installed gmid.
+
+These were taken from the alpine package (thanks begs!) upon user request, but there is a similar script developed for the Gentoo GURU package (thanks Anna!)
+
+=> https://data.gpo.zugaina.org/guru/net-misc/gmid/files/ Gentoo guru net-misc/gmid/files
+
 ## renew certificates automatically
 
 => https://git.omarpolo.com/gmid/tree/contrib/renew-certs contrib/renew-certs

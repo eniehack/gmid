@@ -139,6 +139,7 @@
       <li><a href="#gencert">gencert</a></li>
       <li><a href="#openbsd-rc">OpenBSD rc file</a></li>
       <li><a href="#systemd-unit-file">Systemd unit file</a></li>
+      <li><a href="#openrc-init-script">OpenRC init script</a></li>
       <li><a href="#renew-certs">renew certificates automatically</a></li>
       <li><a href="#vim-syntax-files">Vim syntax files</a></li>
     </ul>
@@ -201,6 +202,29 @@
         <pre># journalctl -t gmid</pre>
       </li>
     </ul>
+    <h2 id="openrc-init-script">OpenRC init script</h2>
+    <p>
+      <a href="https://git.omarpolo.com/gmid/tree/contrib/openrc/gmid.confd">
+        openrc/gmid.confd</a>
+      and
+      <a href="https://git.omarpolo.com/gmid/tree/contrib/openrc/gmid.initd">
+        openrc/gmid.initd</a>
+      are a sample init script for OpenRC, to be installed as
+      <code>/etc/conf.d/gmid</code>
+      and
+      <code>/etc/init.d/gmid.initd</code>
+      respectively.
+    </p>
+    <p>
+      The <code>command</code> variable may need to be adjusted to the
+      exact location where you installed gmid.
+    </p>
+    <p>
+      These were taken from the alpine package (thanks begs!) upon
+      user request, but there is a similar script developed for the
+      <a href="https://data.gpo.zugaina.org/guru/net-misc/gmid/files/">
+        Gentoo GURU package</a> (thanks Anna!)
+    </p>
     <h2 id="renew-certs">renew certificates automatically</h2>
     <p>
       <strong>NB:</strong> this script requires features that are

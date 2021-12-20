@@ -17,6 +17,12 @@ gmid.service
 
 	Simple systemd service file.
 
+openrc/gmid.confd
+openrc/gmid.initd
+
+	OpenRC init script, to be placed in /etc/conf.d/gmid /etc/init.d/
+	respectively.
+
 renew-certs
 
 	Flexible script meant to be run in a cronjob to watch for cert
